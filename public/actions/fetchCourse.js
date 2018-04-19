@@ -7,28 +7,7 @@ export const CourseFetchRequest = (user) => {
   return (dispatch) => {
     axios
       .get('/api/courses' + '/' + user.googleId)
-      .then(res => dispatch({ type: FETCH_REQUEST, status: "loading", payload: res.data }))
+      .then(res => dispatch({ type: FETCH_REQUEST, status: "some", payload: res.data }))
       .catch(err => console.log('ERROR in axios.get courses:', err));
   };
-}
-
-export const CourseFetchSuccess = (courses, c, id) => {
-  const FETCH_SUCCESS = 'COURSE_FETCH_SUCCESS'
-  // console.log('in COURSEFetchSuccess');
-  return {
-    type: FETCH_SUCCESS,
-    status: "success",
-    id,
-    c,
-    courses
-  }
-}
-
-export const CourseFetchFailure = (error) => {
-  const FETCH_FAILURE = 'COURSE_FETCH_FAILURE'
-  return {
-    type: FETCH_FAILURE,
-    status: "error",
-    error
-  }
 }

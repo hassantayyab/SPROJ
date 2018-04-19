@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { CreateCourse } from '../actions/createCourse';
 import CourseForm from './courseForm';
 import { CourseFetchSuccess, CourseFetchRequest, CourseFetchFailure } from '../actions/fetchCourse';
+import {FetchAllCourses} from '../actions/fetchAllCourses';
 import Popup from '../containers/container-popup';
 
 var id;
@@ -31,23 +32,34 @@ class Courses extends Component {
 		// console.log('in courses this.props.auth:', user);		
 		if (this.props.auth) {
 			id =  this.props.auth.googleId;
-			this.props.CourseFetchRequest(this.props.auth);
+			
 		// console.log('in courses this.state.auth:', this.props.auth)
 			// id = this.props.auth.googleId;
 			switch (this.props.auth.userType) {
 				// ***STUDENT PAGE***
 				case 0:
-					const list = ['Physics', 'Biology']
-					const courses = list.map((course, index) =>
-						<li key={index}>
-							<Link id='google-btn' className="card-panel hoverable light-blue darken-4 btn" to={`/assignments${index + 1}`}>
-								{course}
-							</Link>
-						</li>
-					);
-					return courses;
+					this.props.FetchAllCourses();
+					if (this.props.courses) {
+						var list = this.props.courses.map((course, index) => {
+							return (
+								<li key={index}>
+									<Link id='google-btn' className="card-panel hoverable light-blue darken-4 btn" to={`/assignments${index + 1}`}>
+										{course}
+									</Link>
+								</li>
+							);
+						});
+						return list;
+					} else {
+						return (
+							<div>
+								No Courses Available
+							</div>
+						);
+					}
 				// ***INSTRUCTOR PAGE***
 				case 1:
+					this.props.CourseFetchRequest(this.props.auth);
 					// Display Courses List
 					if (id === fetchId) {
 						var list = this.props.courses.map((course, index) => {
@@ -127,7 +139,8 @@ function mapStateToProps(state) {
 	}
 	return {
 		auth: state.auth.payload,
-		courses: state.courses.courses
+		courses: state.courses.courses,
+		status: state.courses.status
 	};
 }
 
@@ -136,7 +149,8 @@ function matchDispatchToProps(dispatch) {
 		CreateCourse,
 		CourseFetchRequest,
 		CourseFetchSuccess,
-		CourseFetchFailure
+		CourseFetchFailure,
+		FetchAllCourses,
 	}, dispatch);
 }
 

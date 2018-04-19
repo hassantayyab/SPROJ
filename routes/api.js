@@ -3,6 +3,8 @@ const router = express.Router();
 const CommentsDB = require('../models/comments');
 const AnswerDB = require('../models/answer');
 const CoursesDB = require('../models/coursesModel');
+const PythonShell = require('python-shell');
+var pyshell = new PythonShell('test.py');
 
 // get all comments list
 router.get('/ninjas/:n', (req, res, next) => {
@@ -18,13 +20,28 @@ router.get('/ninjas/:n', (req, res, next) => {
     });
 });
 
-// get all courses list
+// get some courses list
 router.get('/courses/:n', (req, res, next) => {
   // console.log('In router.get courses:', req.params.n);
   CoursesDB.find({ id: 1 }, { data: { '$elemMatch': { num: req.params.n } } })
     .then((data) => {
       // console.log('COURSES:', data);
       data = data[data.length - 1].data[0];
+      // console.log('COURSES:', data);
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log('ERROR IN API COURSES:', err);
+    });
+});
+
+// get all courses list
+router.get('/coursesAll', (req, res, next) => {
+  // console.log('In router.get courses:', req.params.n);
+  CoursesDB.find({ id: 1 })
+    .then((data) => {
+      // console.log('COURSES:', data);
+      data = data[data.length - 1].data;
       // console.log('COURSES:', data);
       res.send(data);
     })
@@ -149,6 +166,20 @@ router.post('/answer', (req, res, next) => {
       { '$set': { 'data.$.answer': item.answer, 'data.$.count': item.count } }
     )
       .then((answer) => {
+        pyshell.send('hello');
+        pyshell.on('message', (message) => {
+          // received a message sent from the Python script (a simple "print" statement)
+          console.log(message);
+        });
+        // end the input stream and allow the process to exit
+        pyshell.end((err, code, signal) => {
+          if (err) throw err;
+          // console.log('The exit code was: ' + code);
+          // console.log('The exit signal was: ' + signal);
+          // console.log('finished');
+          console.log('finished');
+        });
+        
         res.send(answer);
       })
       .catch((err) => {

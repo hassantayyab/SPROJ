@@ -29650,7 +29650,7 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var initialState = {
-  assignments: [['Assignment 1', 'Assignment 2'], ['Assignment 1', 'Assignment 2', 'Assignment 3']]
+  assignments: [['Assignment 1', 'Assignment 2'], ['Assignment 1', 'Assignment 2', 'Assignment 3', 'Assignment 4', 'Assignment 5', 'Assignment 6'], ['Assignment 1', 'Assignment 2', 'Assignment 3', 'Assignment 4'], ['Assignment 1', 'Assignment 2', 'Assignment 3', 'Assignment 4'], ['Assignment 1', 'Assignment 2', 'Assignment 3', 'Assignment 4', 'Assignment 5'], ['Assignment 1'], ['Assignment 1', 'Assignment 2', 'Assignment 3', 'Assignment 4', 'Assignment 5'], ['Assignment 1', 'Assignment 2', 'Assignment 3'], ['Assignment 1', 'Assignment 2', 'Assignment 3', 'Assignment 4', 'Assignment 5', 'Assignment 6'], ['Assignment 1', 'Assignment 2']]
 };
 
 exports.default = function () {
@@ -29707,12 +29707,24 @@ exports.default = function () {
         return requested;
       } else return state;
 
-    case 'COURSE_FETCH_SUCCESS':
-      return Object.assign({}, state, {
+    case 'FETCH_ALL_COURSES':
+      var allCourses = [];
+      // console.log('in FETCH_ALL_COURSES =>', action.payload);
+      for (var i = 0; i < action.payload.length; i++) {
+        for (var j = 0; j < action.payload[i].courses.length; j++) {
+          allCourses.push(action.payload[i].courses[j]);
+        }
+      }
+      // console.log(action.payload)
+      var requested = Object.assign({}, state, {
         status: action.status,
-        courses: action.courses
+        num: action.payload.num,
+        courses: allCourses
       });
-    // console.log('successful', successful);
+      if (action.payload) {
+        x = allCourses;
+        return requested;
+      } else return state;
 
     case 'CREATE_COURSE':
       console.log('in CREATE_COURSE:', action.payload);
@@ -36636,9 +36648,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var comCount = 0;
-// var n = 2;
 var hiLiCount = 1; // number of highlights
-// var id = 1;
+var userId;
+var fetchId;
 
 var AnswerBox = function (_Component) {
 	_inherits(AnswerBox, _Component);
@@ -36728,9 +36740,55 @@ var AnswerBox = function (_Component) {
 			return _react2.default.createElement('div', null);
 		}
 	}, {
+		key: 'getButton',
+		value: function getButton() {
+			var _this3 = this;
+
+			if (this.props.auth) {
+				userId = this.props.auth.googleId;
+				switch (this.props.auth.userType) {
+					case 0:
+						return _react2.default.createElement('div', null);
+					case 1:
+						return _react2.default.createElement(
+							'a',
+							{ className: 'btn-floating btn-large waves-effect waves-light red', disabled: this.state.able, onClick: function onClick() {
+									return _this3.openPopup();
+								} },
+							_react2.default.createElement(
+								'i',
+								{ className: 'material-icons' },
+								'comment'
+							)
+						);
+					default:
+						break;
+				}
+			}
+		}
+	}, {
+		key: 'getAnswer',
+		value: function getAnswer() {
+			var _this4 = this;
+
+			if (this.props.auth) {
+				userId = this.props.auth.googleId;
+				switch (this.props.auth.userType) {
+					case 0:
+						return _react2.default.createElement('div', { id: 'answer', className: 'col s7', dangerouslySetInnerHTML: this.redraw() });
+					case 1:
+						return _react2.default.createElement('div', { id: 'answer', className: 'col s7', dangerouslySetInnerHTML: this.redraw(), onMouseUp: function onMouseUp() {
+								_this4.enable();_this4.props.selectText(document.getElementById('answer'), hiLiCount, _this4.props.id);
+							} });
+					default:
+						break;
+				}
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			var _this3 = this;
+			var _this5 = this;
 
 			return _react2.default.createElement(
 				'div',
@@ -36738,25 +36796,13 @@ var AnswerBox = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					{ id: 'addComment', className: 'col s1' },
-					_react2.default.createElement(
-						'a',
-						{ className: 'btn-floating btn-large waves-effect waves-light red', disabled: this.state.able, onClick: function onClick() {
-								return _this3.openPopup();
-							} },
-						_react2.default.createElement(
-							'i',
-							{ className: 'material-icons' },
-							'comment'
-						)
-					)
+					this.getButton()
 				),
-				_react2.default.createElement('div', { id: 'answer', className: 'col s7', dangerouslySetInnerHTML: this.redraw(), onMouseUp: function onMouseUp() {
-						_this3.enable();_this3.props.selectText(document.getElementById('answer'), hiLiCount, _this3.props.id);
-					} }),
+				this.getAnswer(),
 				_react2.default.createElement(
 					_containerPopup2.default,
 					{ isOpen: this.state.isPopupOpen, onClose: function onClose() {
-							return _this3.closePopup(event);
+							return _this5.closePopup(event);
 						} },
 					_react2.default.createElement(
 						'h5',
@@ -36768,7 +36814,7 @@ var AnswerBox = function (_Component) {
 						null,
 						_react2.default.createElement('input', { id: 'submit-text', type: 'text', required: true, ref: 'newItem', autoFocus: true }),
 						_react2.default.createElement('input', { id: 'submit', type: 'submit', value: 'Add Comment', onClick: function onClick() {
-								_this3.closePopup(event);_this3.props.submit(_this3.refs.newItem.value, comCount, _this3.props.id);
+								_this5.closePopup(event);_this5.props.submit(_this5.refs.newItem.value, comCount, _this5.props.id);
 							} })
 					)
 				),
@@ -36807,9 +36853,16 @@ var AnswerBox = function (_Component) {
 function mapStateToProps(state, ownProps) {
 	// console.log('in container:',state.CommentBox2);
 	// console.log('in container-A:',state.answer2);
-	hiLiCount = state.answer.hiLiCount[ownProps.match.params.filter - 1];
+	// hiLiCount = state.answer.hiLiCount[ownProps.match.params.filter - 1];
 	// comCount = state.comment.comCount[ownProps.match.params.filter - 1];
+
+	if (state.auth.payload) {
+		hiLiCount = state.answer.hiLiCount[ownProps.match.params.filter - 1];
+		userId = state.auth.payload.googleId;
+	}
+
 	return {
+		auth: state.auth.payload,
 		id: ownProps.match.params.filter,
 		comments: state.comment,
 		answers: state.answer.answers
@@ -37119,6 +37172,8 @@ var _courseForm2 = _interopRequireDefault(_courseForm);
 
 var _fetchCourse = __webpack_require__(381);
 
+var _fetchAllCourses = __webpack_require__(384);
+
 var _containerPopup = __webpack_require__(159);
 
 var _containerPopup2 = _interopRequireDefault(_containerPopup);
@@ -37164,30 +37219,39 @@ var Courses = function (_Component) {
 			// console.log('in courses this.props.auth:', user);		
 			if (this.props.auth) {
 				id = this.props.auth.googleId;
-				this.props.CourseFetchRequest(this.props.auth);
+
 				// console.log('in courses this.state.auth:', this.props.auth)
 				// id = this.props.auth.googleId;
 				switch (this.props.auth.userType) {
 					// ***STUDENT PAGE***
 					case 0:
-						var _list = ['Physics', 'Biology'];
-						var courses = _list.map(function (course, index) {
+						this.props.FetchAllCourses();
+						if (this.props.courses) {
+							var list = this.props.courses.map(function (course, index) {
+								return _react2.default.createElement(
+									'li',
+									{ key: index },
+									_react2.default.createElement(
+										_reactRouterDom.Link,
+										{ id: 'google-btn', className: 'card-panel hoverable light-blue darken-4 btn', to: '/assignments' + (index + 1) },
+										course
+									)
+								);
+							});
+							return list;
+						} else {
 							return _react2.default.createElement(
-								'li',
-								{ key: index },
-								_react2.default.createElement(
-									_reactRouterDom.Link,
-									{ id: 'google-btn', className: 'card-panel hoverable light-blue darken-4 btn', to: '/assignments' + (index + 1) },
-									course
-								)
+								'div',
+								null,
+								'No Courses Available'
 							);
-						});
-						return courses;
+						}
 					// ***INSTRUCTOR PAGE***
 					case 1:
+						this.props.CourseFetchRequest(this.props.auth);
 						// Display Courses List
 						if (id === fetchId) {
-							var _list = this.props.courses.map(function (course, index) {
+							var list = this.props.courses.map(function (course, index) {
 								return _react2.default.createElement(
 									'li',
 									{ key: index },
@@ -37199,7 +37263,7 @@ var Courses = function (_Component) {
 								);
 							});
 							// Add Course Button
-							_list.push(_react2.default.createElement(
+							list.push(_react2.default.createElement(
 								'ul',
 								{ id: 'content' },
 								_react2.default.createElement(
@@ -37214,7 +37278,7 @@ var Courses = function (_Component) {
 									)
 								)
 							));
-							return _list;
+							return list;
 						} else {
 							return _react2.default.createElement(
 								'ul',
@@ -37314,7 +37378,8 @@ function mapStateToProps(state) {
 	}
 	return {
 		auth: state.auth.payload,
-		courses: state.courses.courses
+		courses: state.courses.courses,
+		status: state.courses.status
 	};
 }
 
@@ -37323,7 +37388,8 @@ function matchDispatchToProps(dispatch) {
 		CreateCourse: _createCourse.CreateCourse,
 		CourseFetchRequest: _fetchCourse.CourseFetchRequest,
 		CourseFetchSuccess: _fetchCourse.CourseFetchSuccess,
-		CourseFetchFailure: _fetchCourse.CourseFetchFailure
+		CourseFetchFailure: _fetchCourse.CourseFetchFailure,
+		FetchAllCourses: _fetchAllCourses.FetchAllCourses
 	}, dispatch);
 }
 
@@ -37524,7 +37590,7 @@ exports.default = CourseForm;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CourseFetchFailure = exports.CourseFetchSuccess = exports.CourseFetchRequest = undefined;
+exports.CourseFetchRequest = undefined;
 
 var _axios = __webpack_require__(18);
 
@@ -37538,31 +37604,10 @@ var CourseFetchRequest = exports.CourseFetchRequest = function CourseFetchReques
   // console.log('in COURSE_FETCH_REQUEST');
   return function (dispatch) {
     _axios2.default.get('/api/courses' + '/' + user.googleId).then(function (res) {
-      return dispatch({ type: FETCH_REQUEST, status: "loading", payload: res.data });
+      return dispatch({ type: FETCH_REQUEST, status: "some", payload: res.data });
     }).catch(function (err) {
       return console.log('ERROR in axios.get courses:', err);
     });
-  };
-};
-
-var CourseFetchSuccess = exports.CourseFetchSuccess = function CourseFetchSuccess(courses, c, id) {
-  var FETCH_SUCCESS = 'COURSE_FETCH_SUCCESS';
-  // console.log('in COURSEFetchSuccess');
-  return {
-    type: FETCH_SUCCESS,
-    status: "success",
-    id: id,
-    c: c,
-    courses: courses
-  };
-};
-
-var CourseFetchFailure = exports.CourseFetchFailure = function CourseFetchFailure(error) {
-  var FETCH_FAILURE = 'COURSE_FETCH_FAILURE';
-  return {
-    type: FETCH_FAILURE,
-    status: "error",
-    error: error
   };
 };
 
@@ -37794,6 +37839,37 @@ var Home = function (_Component) {
 ;
 
 exports.default = Home;
+
+/***/ }),
+/* 384 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FetchAllCourses = undefined;
+
+var _axios = __webpack_require__(18);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//define action within an action creator
+var FetchAllCourses = exports.FetchAllCourses = function FetchAllCourses() {
+  var FETCH_ALL_COURSES = 'FETCH_ALL_COURSES';
+  // console.log('in COURSE_FETCH_ALL_COURSES');
+  return function (dispatch) {
+    _axios2.default.get('/api/coursesAll').then(function (res) {
+      return dispatch({ type: FETCH_ALL_COURSES, status: "all", payload: res.data });
+    }).catch(function (err) {
+      return console.log('ERROR in axios.get courses:', err);
+    });
+  };
+};
 
 /***/ })
 /******/ ]);

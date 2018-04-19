@@ -9,6 +9,8 @@ const authRoutes =       require('./routes/auth-routes');
 const restrictedRoutes = require('./routes/restrictedRoutes');
                          require('./config/passport-setup');
 const keys =             require('./config/keys');
+const PythonShell =      require('python-shell');
+
 
 // set up express app
 const app = express();
@@ -37,6 +39,7 @@ app.use(
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // initialize routes
 app.use('/api', apiRoutes);

@@ -23,13 +23,27 @@ export default (state = initialState, action) => {
       }
       else
         return state;
-
-    case 'COURSE_FETCH_SUCCESS':
-      return Object.assign({}, state, {
+      
+    case 'FETCH_ALL_COURSES':
+      var allCourses = []
+      // console.log('in FETCH_ALL_COURSES =>', action.payload);
+      for (let i = 0; i < action.payload.length; i++) {
+        for (let j = 0; j < action.payload[i].courses.length; j++) {
+          allCourses.push(action.payload[i].courses[j]);
+        }
+      }
+      // console.log(action.payload)
+      var requested = Object.assign({}, state, {
         status: action.status,
-        courses: action.courses
+        num: action.payload.num,
+        courses: allCourses
       })
-      // console.log('successful', successful);
+      if (action.payload) {
+        x = allCourses;
+        return requested;
+      }
+      else
+        return state;
 
     case 'CREATE_COURSE':
       console.log('in CREATE_COURSE:', action.payload);

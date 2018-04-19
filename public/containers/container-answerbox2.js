@@ -11,9 +11,9 @@ import { FetchSuccess, FetchRequest, FetchFailure } from '../actions/fetch';
 import { AnswerFetchSuccess, AnswerFetchRequest, AnswerFetchFailure } from '../actions/fetchAnswer';
 
 var comCount = 0;
-// var n = 2;
 var hiLiCount = 1;	// number of highlights
-// var id = 1;
+var userId;
+var fetchId;
 
 class AnswerBox extends Component {
 	constructor(props) {
@@ -89,15 +89,49 @@ class AnswerBox extends Component {
 		);
 	}
 
+	getButton() {
+		if (this.props.auth) {
+			userId = this.props.auth.googleId;
+			switch (this.props.auth.userType) {
+				case 0:
+					return (<div></div>);
+				case 1:
+					return (
+						<a className='btn-floating btn-large waves-effect waves-light red' disabled={this.state.able} onClick={() => this.openPopup()}><i className="material-icons">comment</i></a>
+					);
+				default:
+					break;
+			}
+		}
+	}
+
+	getAnswer() {
+		if (this.props.auth) {
+			userId = this.props.auth.googleId;
+			switch (this.props.auth.userType) {
+				case 0:
+					return(
+						<div id='answer' className='col s7' dangerouslySetInnerHTML={this.redraw()} />
+					)
+				case 1:
+					return (
+						<div id='answer' className='col s7' dangerouslySetInnerHTML={this.redraw()} onMouseUp={() => { this.enable(); this.props.selectText(document.getElementById('answer'), hiLiCount, this.props.id) }} />
+					);
+				default:
+					break;
+			}
+		}
+	}
+
 	render() {
 		return (
 			<div className='row'>
 				{/* AddComment Button */}
 				<div id='addComment' className='col s1'>
-					<a className='btn-floating btn-large waves-effect waves-light red' disabled={this.state.able} onClick={() => this.openPopup()}><i className="material-icons">comment</i></a>
+					{this.getButton()}
 				</div>
 				{/* Answer */}
-				<div id='answer' className='col s7' dangerouslySetInnerHTML={this.redraw()} onMouseUp={() => { this.enable(); this.props.selectText(document.getElementById('answer'), hiLiCount, this.props.id) }} />
+				{this.getAnswer()}
 				{/* PopUp Box */}
 				<Popup isOpen={this.state.isPopupOpen} onClose={() => this.closePopup(event)}>
 					<h5 id="popup-comment">Enter Comment</h5>
@@ -133,12 +167,19 @@ class AnswerBox extends Component {
 function mapStateToProps(state, ownProps) {
 	// console.log('in container:',state.CommentBox2);
 	// console.log('in container-A:',state.answer2);
-	hiLiCount = state.answer.hiLiCount[ownProps.match.params.filter - 1];
+	// hiLiCount = state.answer.hiLiCount[ownProps.match.params.filter - 1];
 	// comCount = state.comment.comCount[ownProps.match.params.filter - 1];
+	
+	if (state.auth.payload) {
+		hiLiCount = state.answer.hiLiCount[ownProps.match.params.filter - 1];
+		userId = state.auth.payload.googleId;
+	}
+
 	return {
+		auth: state.auth.payload,
 		id: ownProps.match.params.filter,
 		comments: state.comment,
-		answers: state.answer.answers,
+		answers: state.answer.answers
 	};
 }
 
