@@ -6,9 +6,14 @@ import { Link } from 'react-router-dom';
 import { selectText } from '../actions/select';
 import Popup from './container-popup';
 import { submit } from '../actions/submit';
+// import css from "../../node_modules/highlight.js/styles/monokai.css";
+import renderHTML from 'react-render-html';
 // import { deleteComment } from '../actions/delete';
 import { FetchSuccess, FetchRequest, FetchFailure } from '../actions/fetch';
 import { AnswerFetchSuccess, AnswerFetchRequest, AnswerFetchFailure } from '../actions/fetchAnswer';
+import Highlight from 'react-highlight';
+import Dropzone from 'react-dropzone';
+import renderIf from 'render-if';
 
 var comCount = 0;
 var hiLiCount = 1;	// number of highlights
@@ -23,8 +28,19 @@ class AnswerBox extends Component {
 			isPopupOpen: false,
 			// count: hiLiCount,
 			value: this.props.answers[this.props.id - 1],
-			data: []
+			data: [],
+			files: []
 		};
+	}
+
+	onDrop(files) {
+		const reader = new window.FileReader();
+		reader.onload = (e) => {
+			this.setState({ value: reader.result });
+			this.props.AnswerFetchSuccess(reader.result, hiLiCount, this.props.id);
+			console.log('reader.result=', reader.result);
+		}
+		reader.readAsText(files[0]);
 	}
 
 	redraw() {
@@ -32,14 +48,19 @@ class AnswerBox extends Component {
 	}
 
 	apiRequest() {
+		console.log('in apiRequest:',this.props.id)
 		axios.get('/api/answer' + '/' + this.props.id + '/' + 1)
 			.then(res => {
 				var answer = res.data.answer;
-				// console.log('in api RequestA:', answer);
+				console.log('in api RequestA:', answer);
 				if (answer) {
+					console.log('in if')
 					var hiLiCount = res.data.count;
+					console.log('in if middle')
 					this.setState({ value: answer });
+					console.log('in if middle2')								
 					this.props.AnswerFetchSuccess(answer, hiLiCount, this.props.id);
+					console.log('in if end')
 				}
 			})
 			.catch(e => {
@@ -110,12 +131,32 @@ class AnswerBox extends Component {
 			userId = this.props.auth.googleId;
 			switch (this.props.auth.userType) {
 				case 0:
-					return(
-						<div id='answer' className='col s7' dangerouslySetInnerHTML={this.redraw()} />
-					)
+					if (this.state.value) {
+						// console.log('in here')
+						return (
+							<div id='answer' className='col s7'>
+								<Highlight>
+									{renderHTML(this.state.value)}
+								</Highlight>
+							</div>
+						);
+					}
+					else {
+						return (
+							<div className="answer">
+								<Dropzone onDrop={this.onDrop.bind(this)}>
+									<p>Try dropping some files here, or click to select files to upload.</p>
+								</Dropzone>
+							</div>
+						);
+					}
 				case 1:
 					return (
-						<div id='answer' className='col s7' dangerouslySetInnerHTML={this.redraw()} onMouseUp={() => { this.enable(); this.props.selectText(document.getElementById('answer'), hiLiCount, this.props.id) }} />
+						<div id='answer' className='col s7' onMouseUp={() => { this.enable(); this.props.selectText(document.getElementById('answer'), hiLiCount, this.props.id) }}>
+							<Highlight>
+								{renderHTML(this.state.value)}
+							</Highlight>
+						</div>
 					);
 				default:
 					break;
@@ -165,11 +206,6 @@ class AnswerBox extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-	// console.log('in container:',state.CommentBox2);
-	// console.log('in container-A:',state.answer2);
-	// hiLiCount = state.answer.hiLiCount[ownProps.match.params.filter - 1];
-	// comCount = state.comment.comCount[ownProps.match.params.filter - 1];
-	
 	if (state.auth.payload) {
 		hiLiCount = state.answer.hiLiCount[ownProps.match.params.filter - 1];
 		userId = state.auth.payload.googleId;

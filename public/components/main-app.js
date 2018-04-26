@@ -14,9 +14,9 @@ import Home from './home';
 
 
 class MainApp extends Component {
-  componentDidMount() {
-    this.props.FetchUser();
-  }
+  // componentDidMount() {
+  //   this.props.FetchUser();
+  // }
 
   render() {
     return (

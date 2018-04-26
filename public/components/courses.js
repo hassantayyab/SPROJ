@@ -7,6 +7,7 @@ import { CreateCourse } from '../actions/createCourse';
 import CourseForm from './courseForm';
 import { CourseFetchSuccess, CourseFetchRequest, CourseFetchFailure } from '../actions/fetchCourse';
 import {FetchAllCourses} from '../actions/fetchAllCourses';
+import { FetchUser } from '../actions/fetchUser';
 import Popup from '../containers/container-popup';
 
 var id;
@@ -23,19 +24,28 @@ class Courses extends Component {
 		};
 	}
 
-	// componentDidUpdate() {
-	// 	// this.apiRequest(this.props.auth);
-	// 	this.dispatchFetchRequest();
-	// }
+	getUser() {
+		axios
+			.get('/auth/current_user')
+			.then(res => {
+				this.props.FetchUser(res.data);
+			})
+			.catch(err => console.log('in axios could not fetch User:', err));
+	}
+
+	componentDidMount() {
+		this.getUser();
+	}
 
 	renderContent() {
-		// console.log('in courses this.props.auth:', user);		
-		if (this.props.auth) {
+		// console.log('in courses this.props.auth:', user);	
+		const user = this.props.auth;
+		if (user) {
 			id =  this.props.auth.googleId;
 			
 		// console.log('in courses this.state.auth:', this.props.auth)
 			// id = this.props.auth.googleId;
-			switch (this.props.auth.userType) {
+			switch (user.userType) {
 				// ***STUDENT PAGE***
 				case 0:
 					this.props.FetchAllCourses();
@@ -52,7 +62,7 @@ class Courses extends Component {
 						return list;
 					} else {
 						return (
-							<div>
+							<div>	
 								No Courses Available
 							</div>
 						);
@@ -151,6 +161,7 @@ function matchDispatchToProps(dispatch) {
 		CourseFetchSuccess,
 		CourseFetchFailure,
 		FetchAllCourses,
+		FetchUser
 	}, dispatch);
 }
 

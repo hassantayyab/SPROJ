@@ -17,7 +17,7 @@ const app = express();
 // Map global promise - get rid of warning
 mongoose.Promise = global.Promise;
 // connect to mongoDB
-mongoose.connect(keys.mongodb.mLabURI, {
+mongoose.connect(keys.mongodb.dbURI, {
   useMongoClient: true
   /* other options */
 })
@@ -51,7 +51,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 // listen to requests
-const PORT = process.env.PORT || 1234;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log('Listening on port 1234');
+  console.log('Listening on port 3000');
 });

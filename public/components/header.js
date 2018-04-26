@@ -1,8 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { FetchUser } from '../actions/fetchUser';
+import axios from 'axios';
 
 class Header extends Component {
+
+  getUser() {
+    axios
+      .get('/auth/current_user')
+      .then(res => {
+        this.props.FetchUser(res.data);
+      })
+      .catch(err => console.log('in axios could not fetch User:', err));
+  }
+
+  componentDidMount() {
+    this.getUser();
+  }
+
   renderContent() {
     const user = this.props.auth;
     // console.log('in header this.props.auth:', user);
@@ -65,4 +82,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Header);
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({
+    FetchUser
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(Header);

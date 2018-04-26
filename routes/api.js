@@ -3,12 +3,13 @@ const router = express.Router();
 const CommentsDB = require('../models/comments');
 const AnswerDB = require('../models/answer');
 const CoursesDB = require('../models/coursesModel');
+const AssignmentsDB = require('../models/assignmentsModel');
 const PythonShell = require('python-shell');
 var pyshell = new PythonShell('test.py');
 
 // get all comments list
 router.get('/ninjas/:n', (req, res, next) => {
-  // console.log('In router.get:', req.params.n);
+  console.log('In router.get:', req.params.n);
   CommentsDB.find({ id: 1 }, { data: { '$elemMatch': { num: req.params.n } } })
     .then((data) => {
       data = data[data.length - 1].data[0];
@@ -50,6 +51,73 @@ router.get('/coursesAll', (req, res, next) => {
     });
 });
 
+// get some assignments list
+router.get('/assignments/:n/:imp', (req, res, next) => {
+  console.log('In router.get assignments:', req.params.n);
+  AssignmentsDB.find({ id: 1 }, { data: { '$elemMatch': { num: req.params.n, imp: req.params.imp } } })
+    .then((data) => {
+      // console.log('ASSIGNMENTS:', data);
+      data = data[data.length - 1].data[0];
+      // console.log('ASSIGNMENTS:', data);
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log('ERROR IN API ASSIGNMENTS:', err);
+    });
+});
+
+// get all assignments list
+router.get('/assignmentsAll', (req, res, next) => {
+  // console.log('In router.get assignments:', req.params.n);
+  AssignmentsDB.find({ id: 1 })
+    .then((data) => {
+      // console.log('ASSIGNMENTS:', data);
+      data = data[data.length - 1].data;
+      // console.log('ASSIGNMENTS:', data);
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log('ERROR IN API ASSIGNMENTS:', err);
+    });
+});
+
+
+// add new course
+router.post('/courses', (req, res, next) => {
+  console.log('in Course router.post:',req.body);
+  var item = {
+    num: req.body.id,
+    courses: req.body.course
+  };
+
+  if (req.body.c > 1) {
+    console.log('In course update');
+    CoursesDB.update(
+      { 'data.num': item.num },
+      { '$set': { 'data.$.courses': item.courses, 'data.$.num': item.num } }
+    )
+      .then((course) => {
+        res.send(course);
+      })
+      .catch((err) => {
+        console.log('ERROR in api course POST:', err);
+      });
+  } else {
+    console.log('In course create');
+    CoursesDB.update(
+      { id: 1 },
+      { $addToSet: { 'data': item } },
+      { safe: true, upsert: true }
+    )
+      .then((course) => {
+        res.send(course);
+      })
+      .catch((err) => {
+        console.log('ERROR in course api POST:', err);
+      });
+    }
+});
+
 // add new comment
 router.post('/ninjas', (req, res, next) => {
   // console.log('in router.post:',req.body);
@@ -88,40 +156,41 @@ router.post('/ninjas', (req, res, next) => {
   }
 });
 
-// add new course
-router.post('/courses', (req, res, next) => {
-  console.log('in Course router.post:',req.body);
+// add new assignment
+router.post('/assignments', (req, res, next) => {
+  console.log('in Assignment router.post:', req.body);
   var item = {
     num: req.body.id,
-    courses: req.body.course
+    imp: req.body.imp,
+    assignments: req.body.assignment
   };
 
   if (req.body.c > 1) {
-    console.log('In course update');
-    CoursesDB.update(
-      { 'data.num': item.num },
-      { '$set': { 'data.$.courses': item.courses, 'data.$.num': item.num } }
+    console.log('In assignment update');
+    AssignmentsDB.update(
+      { 'data.num': item.num, 'data.imp': item.imp },
+      { '$set': { 'data.$.assignments': item.assignments, 'data.$.num': item.num } }
     )
-      .then((course) => {
-        res.send(course);
+      .then((assignment) => {
+        res.send(assignment);
       })
       .catch((err) => {
-        console.log('ERROR in api course POST:', err);
+        console.log('ERROR in api assignment POST:', err);
       });
   } else {
-    console.log('In course create');
-    CoursesDB.update(
+    console.log('In assignment create');
+    AssignmentsDB.update(
       { id: 1 },
       { $addToSet: { 'data': item } },
       { safe: true, upsert: true }
     )
-      .then((course) => {
-        res.send(course);
+      .then((assignment) => {
+        res.send(assignment);
       })
       .catch((err) => {
-        console.log('ERROR in course api POST:', err);
+        console.log('ERROR in assignment api POST:', err);
       });
-    }
+  }
 });
 
 // update comments
@@ -158,9 +227,9 @@ router.post('/answer', (req, res, next) => {
     count: req.body.hiLiCount,
     answer: req.body.answer
   };
-
-  if (item.count != 2) {
-    // console.log('In update');
+  console.log('item.count=',item.count)
+  if (item.count >= 2) {
+    console.log('In update');
     AnswerDB.update(
       { 'data.num': item.num },
       { '$set': { 'data.$.answer': item.answer, 'data.$.count': item.count } }
@@ -186,7 +255,7 @@ router.post('/answer', (req, res, next) => {
         console.log('ERROR in api POST:', err);
       });
   } else {
-    // console.log('In create');
+    console.log('In create');
     AnswerDB.update(
       { id: 1 },
       { $addToSet: { 'data': item } },
