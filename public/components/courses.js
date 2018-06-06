@@ -10,9 +10,10 @@ import {FetchAllCourses} from '../actions/fetchAllCourses';
 import { FetchUser } from '../actions/fetchUser';
 import Popup from '../containers/container-popup';
 
-var id;
+var id = null;
 var fetchId;
 var c = 0;
+var m = 0;
 
 class Courses extends Component {
 	constructor(props) {
@@ -20,7 +21,7 @@ class Courses extends Component {
 		this.state = {
 			isPopupOpen: false,
 			// userId: this.props.auth.googleId,
-			user: this.props.auth
+			user: null
 		};
 	}
 
@@ -28,9 +29,28 @@ class Courses extends Component {
 		axios
 			.get('/auth/current_user')
 			.then(res => {
-				this.props.FetchUser(res.data);
+				this.setState({
+					user: res.data
+				})
 			})
 			.catch(err => console.log('in axios could not fetch User:', err));
+	}
+
+	fetchCourses(user) {
+		axios.get('/api/courses' + '/' + user.googleId)
+			.then(res => {
+				// console.log('course is fetched!');
+				this.props.CourseFetchRequest(res.data);
+			})
+			.catch(err => console.log('ERROR in axios.get courses:', err));
+	}
+
+	FetchAllCourses() {
+		axios.get('/api/coursesAll')
+			.then(res => {
+				this.props.FetchAllCourses(res.data);
+			})
+			.catch(err => console.log('ERROR in axios.get courses:', err));
 	}
 
 	componentDidMount() {
@@ -39,16 +59,15 @@ class Courses extends Component {
 
 	renderContent() {
 		// console.log('in courses this.props.auth:', user);	
-		const user = this.props.auth;
-		if (user) {
-			id =  this.props.auth.googleId;
-			
+		// const user = this.props.auth;
+		if (this.state.user) {
+			id =  this.state.user.googleId;
 		// console.log('in courses this.state.auth:', this.props.auth)
 			// id = this.props.auth.googleId;
-			switch (user.userType) {
+			switch (this.state.user.userType) {
 				// ***STUDENT PAGE***
 				case 0:
-					this.props.FetchAllCourses();
+					this.FetchAllCourses();
 					if (this.props.courses) {
 						var list = this.props.courses.map((course, index) => {
 							return (
@@ -69,9 +88,14 @@ class Courses extends Component {
 					}
 				// ***INSTRUCTOR PAGE***
 				case 1:
-					this.props.CourseFetchRequest(this.props.auth);
+					if (m==0) {
+						this.fetchCourses(this.state.user);
+						// console.log('fetchCourses called!');
+						m++;
+					}
 					// Display Courses List
 					if (id === fetchId) {
+						// console.log('in case 1', this.props.courses);
 						var list = this.props.courses.map((course, index) => {
 							return (
 								<li key={index}>
@@ -120,7 +144,7 @@ class Courses extends Component {
 						<h5 id="popup-comment">Course Name</h5>
 						<form>
 							<input id="submit-text" type="text" required ref="newItem" autoFocus />
-							<input id="submit" type="submit" value="Course Name" onClick={() => { this.closePopup(event); this.props.CreateCourse(this.refs.newItem.value, id, c) }} />
+							<input id="submit" type="submit" value="Course Name" onClick={() => { this.closePopup(event); this.props.CreateCourse(this.refs.newItem.value, id) }} />
 						</form>
 					</Popup>
 				</div>
@@ -141,11 +165,7 @@ class Courses extends Component {
 function mapStateToProps(state) {
 	// console.log('state in courses:', state)
 	if (state.courses) {
-		c = state.courses.courses.length;
 		fetchId = state.courses.num;
-	}
-	if (state.auth.payload) {
-		id = state.auth.payload.googleId;
 	}
 	return {
 		auth: state.auth.payload,

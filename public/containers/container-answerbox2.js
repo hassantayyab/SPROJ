@@ -54,13 +54,9 @@ class AnswerBox extends Component {
 				var answer = res.data.answer;
 				console.log('in api RequestA:', answer);
 				if (answer) {
-					console.log('in if')
 					var hiLiCount = res.data.count;
-					console.log('in if middle')
 					this.setState({ value: answer });
-					console.log('in if middle2')								
 					this.props.AnswerFetchSuccess(answer, hiLiCount, this.props.id);
-					console.log('in if end')
 				}
 			})
 			.catch(e => {

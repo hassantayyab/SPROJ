@@ -4,66 +4,92 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { CreateAssignment } from '../actions/CreateAssignment';
-import { AssignmentFetchRequest } from '../actions/fetchAssignment';
+import { AssignmentFetchRequest, AssignmentFetchFailed } from '../actions/fetchAssignment';
 import { FetchAllAssignments } from '../actions/fetchAllAssignments';
 import { FetchUser } from '../actions/fetchUser';
 import Popup from '../containers/container-popup';
 
-var id;
-var fetchId;
-var c = 0;
-var x2 = 0;
-// var x2 = 0;
-// var imp;
 
 class Assignments extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			// impValue: null,
 			isPopupOpen: false,
-			impValue: this.props.rImp,
-			user: this.props.auth
+			assignments: [],
+			user: null
 		};
-	}
-
-	getUser() {
-		axios
-			.get('/auth/current_user')
-			.then(res => {
-				this.props.FetchUser(res.data);
-				this.getAssignments(res.data.googleId, res.data.userType);
-			})
-			.catch(err => console.log('in axios could not fetch User:', err));
 	}
 
 	componentDidMount() {
 		this.getUser();
 	}
 
-	getAssignments(googleId, userType) {
-		axios
-			.get('/api/assignments' + '/' + googleId + '/' + this.props.imp)
+	getUser() {
+		axios.get('/auth/current_user')
 			.then(res => {
-				if (userType==1) {
-					this.props.AssignmentFetchRequest(res.data);
+				this.setState({
+					user: res.data
+				})
+				if (this.state.user.userType == 1) {
+					this.fetchAssignments();
 				} else {
-					this.props.FetchAllAssignments();
+					console.log('in else')
+					this.fetchAllAssignments();
+				}
+			})
+			.catch(err => console.log('in axios Assignments could not fetch User:', err));
+	}
+
+	fetchAllAssignments() {
+		axios.get('/api/assignmentsAll' + '/' + this.props.imp)
+			.then(res => {
+				console.log('all fetched Assignments =>', res.data);
+				if (res.data) {
+					this.props.AssignmentFetchRequest(res.data);
+					this.setState({
+						assignments: res.data.assignments
+					})
+				}
+				// else {
+				// 	this.props.AssignmentFetchFailed([], this.state.user.googleId, this.props.imp)
+				// }
+			})
+			.catch(err => console.log('ERROR in axios.get assignments:', err));
+	}
+
+	fetchAssignments() {
+		axios.get('/api/assignments' + '/' + this.state.user.googleId + '/' + this.props.imp)
+			.then(res => {
+				console.log('fetched Assignments =>', res.data);
+				if (res.data) {
+					this.props.AssignmentFetchRequest(res.data);					
+					this.setState({
+						assignments: res.data.assignments
+					})
+				}
+				else {
+					this.props.AssignmentFetchFailed([], this.state.user.googleId, this.props.imp)
 				}
 			})
 			.catch(err => console.log('ERROR in axios.get assignments:', err));
 	}
 
 	renderContent() {
-		const user = this.props.auth;		
-		if (user) {
-			id = this.props.auth.googleId;
-
-			switch (user.userType) {
+		// const user = this.props.auth;
+		if (this.state.user) {
+			// id = this.state.user.googleId;
+			switch (this.state.user.userType) {
 				// ***STUDENT PAGE***
 				case 0:
+					// if (m2 == 0) {
+					// 	this.fetchAllAssignments();
+					// 	console.log('fetchAssignments called!');
+					// 	m2++;
+					// }
 					// this.props.AssignmentFetchRequest(this.props.auth, this.props.imp);
-					if (this.props.assignments) {
-						var list = this.props.assignments.map((assignment, index) => {
+					if (this.props.imp == this.props.rImp) {
+						var list = this.state.assignments.map((assignment, index) => {
 							return (
 								<li key={index}>
 									<Link id='google-btn' className="card-panel hoverable light-blue darken-4 btn" to={`/app${index + 1}`}>
@@ -83,32 +109,31 @@ class Assignments extends Component {
 				// ***INSTRUCTOR PAGE***
 				case 1:
 					// Display Assignments List
-					if (this.props.assignments) {
-						console.log('imp and rImp=', this.props.imp, this.props.rImp);
-						if (id === fetchId && this.props.rImp == this.props.imp) {
-							var list = this.props.assignments.map((assignment, index) => {
-								return (
-									<li key={index}>
-										<Link id='google-btn' className="card-panel hoverable light-blue darken-4 btn" to={`/app${index + 1}`}>
-											{assignment}
-										</Link>
-									</li>
-								);
-							});
-							// Add Assignment Button
-							list.push(
-								<ul id="content">
-									<li><a onClick={() => this.openPopup()} className="card-panel hoverable purple darken-4 btn" id='google-btn'>Create Assignment</a></li>
-								</ul>
-							);
-							return list;
-						} else {
+					// console.log('imp and rImp=', this.props.imp, this.props.rImp);
+					if (this.props.fetchId && this.props.imp == this.props.rImp) {
+						// console.log('in case 1:',this.props.assignments)
+						var list = this.state.assignments.map((assignment, index) => {
 							return (
-								<ul id="content">
-									<li><a onClick={() => this.openPopup()} className="card-panel hoverable purple darken-4 btn" id='google-btn'>Create Assignment</a></li>
-								</ul>
+								<li key={index}>
+									<Link id='google-btn' className="card-panel hoverable light-blue darken-4 btn" to={`/app${index + 1}`}>
+										{assignment}
+									</Link>
+								</li>
 							);
-						}
+						});
+						// Add Assignment Button
+						list.push(
+							<ul id="content">
+								<li><a onClick={() => this.openPopup()} className="card-panel hoverable purple darken-4 btn" id='google-btn'>Create Assignment</a></li>
+							</ul>
+						);
+						return list;
+					} else {
+						return (
+							<ul id="content">
+								<li><a onClick={() => this.openPopup()} className="card-panel hoverable purple darken-4 btn" id='google-btn'>Create Assignment</a></li>
+							</ul>
+						);
 					}
 
 				default:
@@ -135,7 +160,7 @@ class Assignments extends Component {
 						<h5 id="popup-comment">Assignment Name</h5>
 						<form>
 							<input id="submit-text" type="text" required ref="newItem" autoFocus />
-							<input id="submit" type="submit" value="Assignment Name" onClick={(e) => { this.closePopup(e); this.props.CreateAssignment(this.refs.newItem.value, id, this.props.imp) }} />
+							<input id="submit" type="submit" value="Assignment Name" onClick={(e) => { this.closePopup(e); this.props.CreateAssignment(this.state.assignments, this.refs.newItem.value, this.state.user.googleId, this.props.imp) }} />
 						</form>
 					</Popup>
 				</div>
@@ -149,24 +174,17 @@ class Assignments extends Component {
 
 	closePopup(event) {
 		event.preventDefault();
-		this.setState({ isPopupOpen: false, able: true })
+		this.setState({ isPopupOpen: false })
 	}
 };
 
 function mapStateToProps(state, ownProps) {
-	console.log('Course num:', ownProps.match.params.filter)
-	if (state.assignments) {
-		c = state.assignments.assignments.length;
-		fetchId = state.assignments.num;
-		// x = state.assignments.length;
-	}
-	if (state.auth.payload) {
-		id = state.auth.payload.googleId;
-	}
+	console.log('state.assignments in mapStateToProps =>', state.assignments)
 	return {
 		auth: state.auth.payload,
-		imp: ownProps.match.params.filter,
+		imp: ownProps.match.params.filter,	// course number
 		assignments: state.assignments.assignments,
+		fetchId: state.assignments.num,
 		rImp: state.assignments.rImp,
 		status: state.assignments.status
 	};
@@ -176,6 +194,7 @@ function matchDispatchToProps(dispatch) {
 	return bindActionCreators({
 		CreateAssignment,
 		AssignmentFetchRequest,
+		AssignmentFetchFailed,
 		FetchAllAssignments,
 		FetchUser,
 	}, dispatch);

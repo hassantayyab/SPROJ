@@ -3,7 +3,7 @@ import axios from 'axios';
 const initialState = {
   status: '',
   num: false,
-  courses: []
+  courses: null
 }
 
 var x = []
@@ -54,10 +54,7 @@ export default (state = initialState, action) => {
         
       return Object.assign({}, state, {
         num: action.id,
-        courses: [
-          ...state.courses,
-          action.payload
-        ]
+        courses: x
       })
 
     default:

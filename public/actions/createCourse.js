@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const CreateCourse = (course, id, c) => {
+export const CreateCourse = (course, id) => {
   const CREATE_COURSE = 'CREATE_COURSE'
   const NULL = 'NULL'
   // console.log('in createCourse action', id);

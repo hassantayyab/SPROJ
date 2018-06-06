@@ -947,12 +947,6 @@ module.exports = ExecutionEnvironment;
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(307);
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2016-present, Facebook, Inc.
@@ -1333,7 +1327,7 @@ module.exports = ReactComponentTreeHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1363,7 +1357,7 @@ module.exports = { debugTool: debugTool };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1671,6 +1665,12 @@ module.exports = {
   trim: trim
 };
 
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(307);
 
 /***/ }),
 /* 15 */
@@ -4531,7 +4531,7 @@ module.exports = reactProdInvariant;
 
 
 var ReactRef = __webpack_require__(213);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 
 var warning = __webpack_require__(2);
 
@@ -7915,7 +7915,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.FetchUser = undefined;
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -10501,7 +10501,7 @@ module.exports = getEventModifierState;
 var DOMLazyTree = __webpack_require__(35);
 var Danger = __webpack_require__(224);
 var ReactDOMComponentTree = __webpack_require__(9);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(76);
 var setInnerHTML = __webpack_require__(56);
@@ -11174,7 +11174,7 @@ var _prodInvariant = __webpack_require__(4);
 
 var ReactCurrentOwner = __webpack_require__(16);
 var ReactInstanceMap = __webpack_require__(44);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 var ReactUpdates = __webpack_require__(17);
 
 var invariant = __webpack_require__(1);
@@ -11832,7 +11832,7 @@ module.exports = getEventCharCode;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 var normalizeHeaderName = __webpack_require__(310);
 
 var DEFAULT_CONTENT_TYPE = {
@@ -16796,7 +16796,7 @@ module.exports = getIteratorFn;
 
 
 var ReactCurrentOwner = __webpack_require__(16);
-var ReactComponentTreeHook = __webpack_require__(12);
+var ReactComponentTreeHook = __webpack_require__(11);
 var ReactElement = __webpack_require__(28);
 
 var checkReactTypeSpec = __webpack_require__(196);
@@ -19351,7 +19351,7 @@ module.exports = CSSProperty;
 
 var DOMProperty = __webpack_require__(24);
 var ReactDOMComponentTree = __webpack_require__(9);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 
 var quoteAttributeValueForBrowser = __webpack_require__(238);
 var warning = __webpack_require__(2);
@@ -20564,7 +20564,7 @@ var ReactDOMContainerInfo = __webpack_require__(280);
 var ReactDOMFeatureFlags = __webpack_require__(281);
 var ReactFeatureFlags = __webpack_require__(123);
 var ReactInstanceMap = __webpack_require__(44);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 var ReactMarkupChecksum = __webpack_require__(282);
 var ReactReconciler = __webpack_require__(34);
 var ReactUpdateQueue = __webpack_require__(82);
@@ -21550,7 +21550,7 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 var settle = __webpack_require__(311);
 var buildURL = __webpack_require__(313);
 var parseHeaders = __webpack_require__(314);
@@ -29503,7 +29503,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(12);
+  ReactComponentTreeHook = __webpack_require__(11);
 }
 
 var loggedTypeFailures = {};
@@ -29545,7 +29545,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(12);
+            ReactComponentTreeHook = __webpack_require__(11);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -29900,7 +29900,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactInstrumentation = __webpack_require__(13);
+  var ReactInstrumentation = __webpack_require__(12);
   var ReactDOMUnknownPropertyHook = __webpack_require__(287);
   var ReactDOMNullInputValuePropHook = __webpack_require__(288);
   var ReactDOMInvalidARIAHook = __webpack_require__(289);
@@ -31185,7 +31185,7 @@ module.exports = ReactOwner;
 
 var ReactInvalidSetStateWarningHook = __webpack_require__(216);
 var ReactHostOperationHistoryHook = __webpack_require__(217);
-var ReactComponentTreeHook = __webpack_require__(12);
+var ReactComponentTreeHook = __webpack_require__(11);
 var ExecutionEnvironment = __webpack_require__(10);
 
 var performanceNow = __webpack_require__(218);
@@ -32540,7 +32540,7 @@ var ReactDOMInput = __webpack_require__(241);
 var ReactDOMOption = __webpack_require__(242);
 var ReactDOMSelect = __webpack_require__(132);
 var ReactDOMTextarea = __webpack_require__(243);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 var ReactMultiChild = __webpack_require__(244);
 var ReactServerRenderingTransaction = __webpack_require__(253);
 
@@ -33567,7 +33567,7 @@ module.exports = AutoFocusUtils;
 
 var CSSProperty = __webpack_require__(129);
 var ExecutionEnvironment = __webpack_require__(10);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 
 var camelizeStyleName = __webpack_require__(232);
 var dangerousStyleValue = __webpack_require__(234);
@@ -34835,7 +34835,7 @@ var _prodInvariant = __webpack_require__(4);
 
 var ReactComponentEnvironment = __webpack_require__(78);
 var ReactInstanceMap = __webpack_require__(44);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 
 var ReactCurrentOwner = __webpack_require__(16);
 var ReactReconciler = __webpack_require__(34);
@@ -35299,7 +35299,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(12);
+  ReactComponentTreeHook = __webpack_require__(11);
 }
 
 function instantiateChild(childInstances, child, name, selfDebugID) {
@@ -35307,7 +35307,7 @@ function instantiateChild(childInstances, child, name, selfDebugID) {
   var keyUnique = childInstances[name] === undefined;
   if (process.env.NODE_ENV !== 'production') {
     if (!ReactComponentTreeHook) {
-      ReactComponentTreeHook = __webpack_require__(12);
+      ReactComponentTreeHook = __webpack_require__(11);
     }
     if (!keyUnique) {
       process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -35450,7 +35450,7 @@ var ReactComponentEnvironment = __webpack_require__(78);
 var ReactCurrentOwner = __webpack_require__(16);
 var ReactErrorUtils = __webpack_require__(70);
 var ReactInstanceMap = __webpack_require__(44);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 var ReactNodeTypes = __webpack_require__(134);
 var ReactReconciler = __webpack_require__(34);
 
@@ -36364,7 +36364,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(12);
+  ReactComponentTreeHook = __webpack_require__(11);
 }
 
 var loggedTypeFailures = {};
@@ -36406,7 +36406,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(12);
+            ReactComponentTreeHook = __webpack_require__(11);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -36580,7 +36580,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(12);
+  ReactComponentTreeHook = __webpack_require__(11);
 }
 
 /**
@@ -36596,7 +36596,7 @@ function flattenSingleChildIntoContext(traverseContext, child, name, selfDebugID
     var keyUnique = result[name] === undefined;
     if (process.env.NODE_ENV !== 'production') {
       if (!ReactComponentTreeHook) {
-        ReactComponentTreeHook = __webpack_require__(12);
+        ReactComponentTreeHook = __webpack_require__(11);
       }
       if (!keyUnique) {
         process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -36653,7 +36653,7 @@ var _assign = __webpack_require__(7);
 
 var PooledClass = __webpack_require__(29);
 var Transaction = __webpack_require__(54);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 var ReactServerUpdateQueue = __webpack_require__(254);
 
 /**
@@ -37587,7 +37587,7 @@ var CallbackQueue = __webpack_require__(122);
 var PooledClass = __webpack_require__(29);
 var ReactBrowserEventEmitter = __webpack_require__(58);
 var ReactInputSelection = __webpack_require__(139);
-var ReactInstrumentation = __webpack_require__(13);
+var ReactInstrumentation = __webpack_require__(12);
 var Transaction = __webpack_require__(54);
 var ReactUpdateQueue = __webpack_require__(82);
 
@@ -39698,7 +39698,7 @@ module.exports = ReactMount.renderSubtreeIntoContainer;
 
 var DOMProperty = __webpack_require__(24);
 var EventPluginRegistry = __webpack_require__(53);
-var ReactComponentTreeHook = __webpack_require__(12);
+var ReactComponentTreeHook = __webpack_require__(11);
 
 var warning = __webpack_require__(2);
 
@@ -39814,7 +39814,7 @@ module.exports = ReactDOMUnknownPropertyHook;
 
 
 
-var ReactComponentTreeHook = __webpack_require__(12);
+var ReactComponentTreeHook = __webpack_require__(11);
 
 var warning = __webpack_require__(2);
 
@@ -39864,7 +39864,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 
 var DOMProperty = __webpack_require__(24);
-var ReactComponentTreeHook = __webpack_require__(12);
+var ReactComponentTreeHook = __webpack_require__(11);
 
 var warning = __webpack_require__(2);
 
@@ -40588,7 +40588,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -40659,7 +40659,7 @@ exports.default = function () {
 "use strict";
 
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 var bind = __webpack_require__(148);
 var Axios = __webpack_require__(309);
 var defaults = __webpack_require__(85);
@@ -40746,7 +40746,7 @@ function isSlowBuffer (obj) {
 
 
 var defaults = __webpack_require__(85);
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 var InterceptorManager = __webpack_require__(318);
 var dispatchRequest = __webpack_require__(319);
 var isAbsoluteURL = __webpack_require__(321);
@@ -40838,7 +40838,7 @@ module.exports = Axios;
 "use strict";
 
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -40918,7 +40918,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 "use strict";
 
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -40993,7 +40993,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 "use strict";
 
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 
 /**
  * Parse headers into an object
@@ -41037,7 +41037,7 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -41155,7 +41155,7 @@ module.exports = btoa;
 "use strict";
 
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -41215,7 +41215,7 @@ module.exports = (
 "use strict";
 
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -41274,7 +41274,7 @@ module.exports = InterceptorManager;
 "use strict";
 
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 var transformData = __webpack_require__(320);
 var isCancel = __webpack_require__(151);
 var defaults = __webpack_require__(85);
@@ -41360,7 +41360,7 @@ module.exports = function dispatchRequest(config) {
 "use strict";
 
 
-var utils = __webpack_require__(14);
+var utils = __webpack_require__(13);
 
 /**
  * Transform the data for a request or a response
@@ -41570,13 +41570,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var initialState = {
   status: '',
@@ -41585,57 +41583,42 @@ var initialState = {
   assignments: []
 };
 
-var x = [];
-
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments[1];
 
   switch (action.type) {
     case 'ASSIGNMENT_FETCH_REQUEST':
-      console.log('in ASSIGNMENT_FETCH_REQUEST =>', action.payload.imp);
-      var requested = Object.assign({}, state, {
+      console.log('in ASSIGNMENT_FETCH_REQUEST =>', action.payload);
+      return Object.assign({}, state, {
         status: action.status,
         num: action.payload.num,
         rImp: action.payload.imp,
         assignments: action.payload.assignments
       });
-      if (action.payload) {
-        x = action.payload.assignments;
-        return requested;
-      } else return state;
 
-    case 'FETCH_ALL_ASSIGNMENTS':
-      var allAssignments = [];
-      console.log('in FETCH_ALL_ASSIGNMENTS =>', action.payload);
-      for (var i = 0; i < action.payload.length; i++) {
-        for (var j = 0; j < action.payload[i].assignments.length; j++) {
-          allAssignments.push(action.payload[i].assignments[j]);
-        }
-      }
-      // console.log(action.payload)
-      var requested = Object.assign({}, state, {
+    case 'ASSIGNMENT_FETCH_FAILED':
+      console.log('in ASSIGNMENT_FETCH_FAILED =>', action.payload);
+      return Object.assign({}, state, {
         status: action.status,
-        num: action.payload.num,
-        assignments: allAssignments
+        num: action.id,
+        rImp: action.imp,
+        assignments: action.payload
       });
-      if (action.payload) {
-        x = allAssignments;
-        return requested;
-      } else return state;
 
     case 'CREATE_ASSIGNMENT':
-      console.log('in CREATE_ASSIGNMENT:', action.payload);
-      x.push(action.payload);
-      console.log('x =', x);
-      _axios2.default.post('api/assignments', { c: x.length, assignment: x, id: action.id, imp: action.imp }).catch(function (err) {
+      console.log('in CREATE_ASSIGNMENT:', action);
+      // var a = action.assignments;
+      // a.push(action.payload);
+      // console.log('a=',a);
+      _axios2.default.post('api/assignments', { c: action.assignments.length, assignment: action.assignments, id: action.id, imp: action.imp }).catch(function (err) {
         return console.log('in axios could not POST ASSIGNMENTS:', err);
       });
 
       return Object.assign({}, state, {
         num: action.id,
         rImp: action.imp,
-        assignments: [].concat(_toConsumableArray(state.assignments), [action.payload])
+        assignments: action.assignments
       });
 
     default:
@@ -41654,18 +41637,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 var initialState = {
   status: '',
   num: false,
-  courses: []
+  courses: null
 };
 
 var x = [];
@@ -41716,7 +41697,7 @@ exports.default = function () {
 
       return Object.assign({}, state, {
         num: action.id,
-        courses: [].concat(_toConsumableArray(state.courses), [action.payload])
+        courses: x
       });
 
     default:
@@ -41735,7 +41716,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -48468,7 +48449,7 @@ var _redux = __webpack_require__(25);
 
 var _fetchUser = __webpack_require__(45);
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -48621,7 +48602,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -48727,13 +48708,9 @@ var AnswerBox = function (_Component) {
 				var answer = res.data.answer;
 				console.log('in api RequestA:', answer);
 				if (answer) {
-					console.log('in if');
 					var hiLiCount = res.data.count;
-					console.log('in if middle');
 					_this3.setState({ value: answer });
-					console.log('in if middle2');
 					_this3.props.AnswerFetchSuccess(answer, hiLiCount, _this3.props.id);
-					console.log('in if end');
 				}
 			}).catch(function (e) {
 				console.log('In axios.getA:', e);
@@ -70647,7 +70624,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -70681,13 +70658,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var id;
-var fetchId;
-var c = 0;
-var x2 = 0;
-// var x2 = 0;
-// var imp;
-
 var Assignments = function (_Component) {
 	_inherits(Assignments, _Component);
 
@@ -70697,40 +70667,72 @@ var Assignments = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (Assignments.__proto__ || Object.getPrototypeOf(Assignments)).call(this, props));
 
 		_this.state = {
+			// impValue: null,
 			isPopupOpen: false,
-			impValue: _this.props.rImp,
-			user: _this.props.auth
+			assignments: [],
+			user: null
 		};
 		return _this;
 	}
 
 	_createClass(Assignments, [{
-		key: 'getUser',
-		value: function getUser() {
-			var _this2 = this;
-
-			_axios2.default.get('/auth/current_user').then(function (res) {
-				_this2.props.FetchUser(res.data);
-				_this2.getAssignments(res.data.googleId, res.data.userType);
-			}).catch(function (err) {
-				return console.log('in axios could not fetch User:', err);
-			});
-		}
-	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
 			this.getUser();
 		}
 	}, {
-		key: 'getAssignments',
-		value: function getAssignments(googleId, userType) {
+		key: 'getUser',
+		value: function getUser() {
+			var _this2 = this;
+
+			_axios2.default.get('/auth/current_user').then(function (res) {
+				_this2.setState({
+					user: res.data
+				});
+				if (_this2.state.user.userType == 1) {
+					_this2.fetchAssignments();
+				} else {
+					console.log('in else');
+					_this2.fetchAllAssignments();
+				}
+			}).catch(function (err) {
+				return console.log('in axios Assignments could not fetch User:', err);
+			});
+		}
+	}, {
+		key: 'fetchAllAssignments',
+		value: function fetchAllAssignments() {
 			var _this3 = this;
 
-			_axios2.default.get('/api/assignments' + '/' + googleId + '/' + this.props.imp).then(function (res) {
-				if (userType == 1) {
+			_axios2.default.get('/api/assignmentsAll' + '/' + this.props.imp).then(function (res) {
+				console.log('all fetched Assignments =>', res.data);
+				if (res.data) {
 					_this3.props.AssignmentFetchRequest(res.data);
+					_this3.setState({
+						assignments: res.data.assignments
+					});
+				}
+				// else {
+				// 	this.props.AssignmentFetchFailed([], this.state.user.googleId, this.props.imp)
+				// }
+			}).catch(function (err) {
+				return console.log('ERROR in axios.get assignments:', err);
+			});
+		}
+	}, {
+		key: 'fetchAssignments',
+		value: function fetchAssignments() {
+			var _this4 = this;
+
+			_axios2.default.get('/api/assignments' + '/' + this.state.user.googleId + '/' + this.props.imp).then(function (res) {
+				console.log('fetched Assignments =>', res.data);
+				if (res.data) {
+					_this4.props.AssignmentFetchRequest(res.data);
+					_this4.setState({
+						assignments: res.data.assignments
+					});
 				} else {
-					_this3.props.FetchAllAssignments();
+					_this4.props.AssignmentFetchFailed([], _this4.state.user.googleId, _this4.props.imp);
 				}
 			}).catch(function (err) {
 				return console.log('ERROR in axios.get assignments:', err);
@@ -70739,18 +70741,22 @@ var Assignments = function (_Component) {
 	}, {
 		key: 'renderContent',
 		value: function renderContent() {
-			var _this4 = this;
+			var _this5 = this;
 
-			var user = this.props.auth;
-			if (user) {
-				id = this.props.auth.googleId;
-
-				switch (user.userType) {
+			// const user = this.props.auth;
+			if (this.state.user) {
+				// id = this.state.user.googleId;
+				switch (this.state.user.userType) {
 					// ***STUDENT PAGE***
 					case 0:
+						// if (m2 == 0) {
+						// 	this.fetchAllAssignments();
+						// 	console.log('fetchAssignments called!');
+						// 	m2++;
+						// }
 						// this.props.AssignmentFetchRequest(this.props.auth, this.props.imp);
-						if (this.props.assignments) {
-							var list = this.props.assignments.map(function (assignment, index) {
+						if (this.props.imp == this.props.rImp) {
+							var list = this.state.assignments.map(function (assignment, index) {
 								return _react2.default.createElement(
 									'li',
 									{ key: index },
@@ -70772,54 +70778,53 @@ var Assignments = function (_Component) {
 					// ***INSTRUCTOR PAGE***
 					case 1:
 						// Display Assignments List
-						if (this.props.assignments) {
-							console.log('imp and rImp=', this.props.imp, this.props.rImp);
-							if (id === fetchId && this.props.rImp == this.props.imp) {
-								var list = this.props.assignments.map(function (assignment, index) {
-									return _react2.default.createElement(
-										'li',
-										{ key: index },
-										_react2.default.createElement(
-											_reactRouterDom.Link,
-											{ id: 'google-btn', className: 'card-panel hoverable light-blue darken-4 btn', to: '/app' + (index + 1) },
-											assignment
-										)
-									);
-								});
-								// Add Assignment Button
-								list.push(_react2.default.createElement(
-									'ul',
-									{ id: 'content' },
-									_react2.default.createElement(
-										'li',
-										null,
-										_react2.default.createElement(
-											'a',
-											{ onClick: function onClick() {
-													return _this4.openPopup();
-												}, className: 'card-panel hoverable purple darken-4 btn', id: 'google-btn' },
-											'Create Assignment'
-										)
-									)
-								));
-								return list;
-							} else {
+						// console.log('imp and rImp=', this.props.imp, this.props.rImp);
+						if (this.props.fetchId && this.props.imp == this.props.rImp) {
+							// console.log('in case 1:',this.props.assignments)
+							var list = this.state.assignments.map(function (assignment, index) {
 								return _react2.default.createElement(
-									'ul',
-									{ id: 'content' },
+									'li',
+									{ key: index },
 									_react2.default.createElement(
-										'li',
-										null,
-										_react2.default.createElement(
-											'a',
-											{ onClick: function onClick() {
-													return _this4.openPopup();
-												}, className: 'card-panel hoverable purple darken-4 btn', id: 'google-btn' },
-											'Create Assignment'
-										)
+										_reactRouterDom.Link,
+										{ id: 'google-btn', className: 'card-panel hoverable light-blue darken-4 btn', to: '/app' + (index + 1) },
+										assignment
 									)
 								);
-							}
+							});
+							// Add Assignment Button
+							list.push(_react2.default.createElement(
+								'ul',
+								{ id: 'content' },
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ onClick: function onClick() {
+												return _this5.openPopup();
+											}, className: 'card-panel hoverable purple darken-4 btn', id: 'google-btn' },
+										'Create Assignment'
+									)
+								)
+							));
+							return list;
+						} else {
+							return _react2.default.createElement(
+								'ul',
+								{ id: 'content' },
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ onClick: function onClick() {
+												return _this5.openPopup();
+											}, className: 'card-panel hoverable purple darken-4 btn', id: 'google-btn' },
+										'Create Assignment'
+									)
+								)
+							);
 						}
 
 					default:
@@ -70830,7 +70835,7 @@ var Assignments = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			var _this5 = this;
+			var _this6 = this;
 
 			return _react2.default.createElement(
 				'div',
@@ -70855,7 +70860,7 @@ var Assignments = function (_Component) {
 					_react2.default.createElement(
 						_containerPopup2.default,
 						{ isOpen: this.state.isPopupOpen, onClose: function onClose() {
-								return _this5.closePopup(event);
+								return _this6.closePopup(event);
 							} },
 						_react2.default.createElement(
 							'h5',
@@ -70867,7 +70872,7 @@ var Assignments = function (_Component) {
 							null,
 							_react2.default.createElement('input', { id: 'submit-text', type: 'text', required: true, ref: 'newItem', autoFocus: true }),
 							_react2.default.createElement('input', { id: 'submit', type: 'submit', value: 'Assignment Name', onClick: function onClick(e) {
-									_this5.closePopup(e);_this5.props.CreateAssignment(_this5.refs.newItem.value, id, _this5.props.imp);
+									_this6.closePopup(e);_this6.props.CreateAssignment(_this6.state.assignments, _this6.refs.newItem.value, _this6.state.user.googleId, _this6.props.imp);
 								} })
 						)
 					)
@@ -70883,7 +70888,7 @@ var Assignments = function (_Component) {
 		key: 'closePopup',
 		value: function closePopup(event) {
 			event.preventDefault();
-			this.setState({ isPopupOpen: false, able: true });
+			this.setState({ isPopupOpen: false });
 		}
 	}]);
 
@@ -70893,19 +70898,12 @@ var Assignments = function (_Component) {
 ;
 
 function mapStateToProps(state, ownProps) {
-	console.log('Course num:', ownProps.match.params.filter);
-	if (state.assignments) {
-		c = state.assignments.assignments.length;
-		fetchId = state.assignments.num;
-		// x = state.assignments.length;
-	}
-	if (state.auth.payload) {
-		id = state.auth.payload.googleId;
-	}
+	console.log('state.assignments in mapStateToProps =>', state.assignments);
 	return {
 		auth: state.auth.payload,
-		imp: ownProps.match.params.filter,
+		imp: ownProps.match.params.filter, // course number
 		assignments: state.assignments.assignments,
+		fetchId: state.assignments.num,
 		rImp: state.assignments.rImp,
 		status: state.assignments.status
 	};
@@ -70915,6 +70913,7 @@ function matchDispatchToProps(dispatch) {
 	return (0, _redux.bindActionCreators)({
 		CreateAssignment: _CreateAssignment.CreateAssignment,
 		AssignmentFetchRequest: _fetchAssignment.AssignmentFetchRequest,
+		AssignmentFetchFailed: _fetchAssignment.AssignmentFetchFailed,
 		FetchAllAssignments: _fetchAllAssignments.FetchAllAssignments,
 		FetchUser: _fetchUser.FetchUser
 	}, dispatch);
@@ -70932,19 +70931,15 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, matchDispatchToProps
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CreateAssignment = undefined;
-
-var _axios = __webpack_require__(11);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var CreateAssignment = exports.CreateAssignment = function CreateAssignment(assignment, id, imp) {
+var CreateAssignment = exports.CreateAssignment = function CreateAssignment(assignments, assignment, id, imp) {
   var CREATE_ASSIGNMENT = 'CREATE_ASSIGNMENT';
+  assignments.push(assignment);
+  // console.log('in action:', assignments);  
   return {
     type: CREATE_ASSIGNMENT,
+    status: 'created',
     payload: assignment,
+    assignments: assignments,
     id: id,
     imp: imp
   };
@@ -70960,21 +70955,23 @@ var CreateAssignment = exports.CreateAssignment = function CreateAssignment(assi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AssignmentFetchRequest = undefined;
-
-var _axios = __webpack_require__(11);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//define action within an action creator
 var AssignmentFetchRequest = exports.AssignmentFetchRequest = function AssignmentFetchRequest(data) {
   var FETCH_REQUEST = 'ASSIGNMENT_FETCH_REQUEST';
-  // console.log('in ASSIGNMENT_FETCH_REQUEST');
   return {
     type: FETCH_REQUEST,
+    status: 'success',
     payload: data
+  };
+};
+
+var AssignmentFetchFailed = exports.AssignmentFetchFailed = function AssignmentFetchFailed(assignment, id, imp) {
+  var FETCH_FAILED = 'ASSIGNMENT_FETCH_FAILED';
+  return {
+    type: FETCH_FAILED,
+    status: 'failure',
+    payload: assignment,
+    id: id,
+    imp: imp
   };
 };
 
@@ -70988,24 +70985,19 @@ var AssignmentFetchRequest = exports.AssignmentFetchRequest = function Assignmen
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FetchAllAssignments = undefined;
-
-var _axios = __webpack_require__(11);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//define action within an action creator
-var FetchAllAssignments = exports.FetchAllAssignments = function FetchAllAssignments() {
+var FetchAllAssignments = exports.FetchAllAssignments = function FetchAllAssignments(data) {
   var FETCH_ALL_ASSIGNMENTS = 'FETCH_ALL_ASSIGNMENTS';
   // console.log('in COURSE_FETCH_ALL_ASSIGNMENTS');
-  return function (dispatch) {
-    _axios2.default.get('/api/assignmentsAll').then(function (res) {
-      return dispatch({ type: FETCH_ALL_ASSIGNMENTS, status: "all", payload: res.data });
-    }).catch(function (err) {
-      return console.log('ERROR in axios.get all assignments:', err);
-    });
+  // return (dispatch) => {
+  //   axios
+  //     .get('/api/assignmentsAll')
+  //     .then(res => dispatch({ type: FETCH_ALL_ASSIGNMENTS, status: "all", payload: res.data }))
+  //     .catch(err => console.log('ERROR in axios.get all assignments:', err));
+  // };
+  return {
+    type: FETCH_ALL_ASSIGNMENTS,
+    status: 'all',
+    payload: data
   };
 };
 
@@ -71022,7 +71014,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -71060,9 +71052,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var id;
+var id = null;
 var fetchId;
 var c = 0;
+var m = 0;
 
 var Courses = function (_Component) {
 	_inherits(Courses, _Component);
@@ -71075,7 +71068,7 @@ var Courses = function (_Component) {
 		_this.state = {
 			isPopupOpen: false,
 			// userId: this.props.auth.googleId,
-			user: _this.props.auth
+			user: null
 		};
 		return _this;
 	}
@@ -71086,9 +71079,34 @@ var Courses = function (_Component) {
 			var _this2 = this;
 
 			_axios2.default.get('/auth/current_user').then(function (res) {
-				_this2.props.FetchUser(res.data);
+				_this2.setState({
+					user: res.data
+				});
 			}).catch(function (err) {
 				return console.log('in axios could not fetch User:', err);
+			});
+		}
+	}, {
+		key: 'fetchCourses',
+		value: function fetchCourses(user) {
+			var _this3 = this;
+
+			_axios2.default.get('/api/courses' + '/' + user.googleId).then(function (res) {
+				// console.log('course is fetched!');
+				_this3.props.CourseFetchRequest(res.data);
+			}).catch(function (err) {
+				return console.log('ERROR in axios.get courses:', err);
+			});
+		}
+	}, {
+		key: 'FetchAllCourses',
+		value: function FetchAllCourses() {
+			var _this4 = this;
+
+			_axios2.default.get('/api/coursesAll').then(function (res) {
+				_this4.props.FetchAllCourses(res.data);
+			}).catch(function (err) {
+				return console.log('ERROR in axios.get courses:', err);
 			});
 		}
 	}, {
@@ -71099,19 +71117,18 @@ var Courses = function (_Component) {
 	}, {
 		key: 'renderContent',
 		value: function renderContent() {
-			var _this3 = this;
+			var _this5 = this;
 
 			// console.log('in courses this.props.auth:', user);	
-			var user = this.props.auth;
-			if (user) {
-				id = this.props.auth.googleId;
-
+			// const user = this.props.auth;
+			if (this.state.user) {
+				id = this.state.user.googleId;
 				// console.log('in courses this.state.auth:', this.props.auth)
 				// id = this.props.auth.googleId;
-				switch (user.userType) {
+				switch (this.state.user.userType) {
 					// ***STUDENT PAGE***
 					case 0:
-						this.props.FetchAllCourses();
+						this.FetchAllCourses();
 						if (this.props.courses) {
 							var list = this.props.courses.map(function (course, index) {
 								return _react2.default.createElement(
@@ -71134,9 +71151,14 @@ var Courses = function (_Component) {
 						}
 					// ***INSTRUCTOR PAGE***
 					case 1:
-						this.props.CourseFetchRequest(this.props.auth);
+						if (m == 0) {
+							this.fetchCourses(this.state.user);
+							// console.log('fetchCourses called!');
+							m++;
+						}
 						// Display Courses List
 						if (id === fetchId) {
+							// console.log('in case 1', this.props.courses);
 							var list = this.props.courses.map(function (course, index) {
 								return _react2.default.createElement(
 									'li',
@@ -71158,7 +71180,7 @@ var Courses = function (_Component) {
 									_react2.default.createElement(
 										'a',
 										{ onClick: function onClick() {
-												return _this3.openPopup();
+												return _this5.openPopup();
 											}, className: 'card-panel hoverable purple darken-4 btn', id: 'google-btn' },
 										'Create Course'
 									)
@@ -71175,7 +71197,7 @@ var Courses = function (_Component) {
 									_react2.default.createElement(
 										'a',
 										{ onClick: function onClick() {
-												return _this3.openPopup();
+												return _this5.openPopup();
 											}, className: 'card-panel hoverable purple darken-4 btn', id: 'google-btn' },
 										'Create Course'
 									)
@@ -71191,7 +71213,7 @@ var Courses = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			var _this4 = this;
+			var _this6 = this;
 
 			return _react2.default.createElement(
 				'div',
@@ -71216,7 +71238,7 @@ var Courses = function (_Component) {
 					_react2.default.createElement(
 						_containerPopup2.default,
 						{ isOpen: this.state.isPopupOpen, onClose: function onClose() {
-								return _this4.closePopup(event);
+								return _this6.closePopup(event);
 							} },
 						_react2.default.createElement(
 							'h5',
@@ -71228,7 +71250,7 @@ var Courses = function (_Component) {
 							null,
 							_react2.default.createElement('input', { id: 'submit-text', type: 'text', required: true, ref: 'newItem', autoFocus: true }),
 							_react2.default.createElement('input', { id: 'submit', type: 'submit', value: 'Course Name', onClick: function onClick() {
-									_this4.closePopup(event);_this4.props.CreateCourse(_this4.refs.newItem.value, id, c);
+									_this6.closePopup(event);_this6.props.CreateCourse(_this6.refs.newItem.value, id);
 								} })
 						)
 					)
@@ -71256,11 +71278,7 @@ var Courses = function (_Component) {
 function mapStateToProps(state) {
 	// console.log('state in courses:', state)
 	if (state.courses) {
-		c = state.courses.courses.length;
 		fetchId = state.courses.num;
-	}
-	if (state.auth.payload) {
-		id = state.auth.payload.googleId;
 	}
 	return {
 		auth: state.auth.payload,
@@ -71294,13 +71312,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CreateCourse = undefined;
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var CreateCourse = exports.CreateCourse = function CreateCourse(course, id, c) {
+var CreateCourse = exports.CreateCourse = function CreateCourse(course, id) {
   var CREATE_COURSE = 'CREATE_COURSE';
   var NULL = 'NULL';
   // console.log('in createCourse action', id);
@@ -71477,24 +71495,18 @@ exports.default = CourseForm;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CourseFetchRequest = undefined;
-
-var _axios = __webpack_require__(11);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//define action within an action creator
 var CourseFetchRequest = exports.CourseFetchRequest = function CourseFetchRequest(user) {
   var FETCH_REQUEST = 'COURSE_FETCH_REQUEST';
-  // console.log('in COURSE_FETCH_REQUEST');
-  return function (dispatch) {
-    _axios2.default.get('/api/courses' + '/' + user.googleId).then(function (res) {
-      return dispatch({ type: FETCH_REQUEST, status: "some", payload: res.data });
-    }).catch(function (err) {
-      return console.log('ERROR in axios.get courses:', err);
-    });
+  // return (dispatch) => {
+  //   axios
+  //     .get('/api/courses' + '/' + user.googleId)
+  //     .then(res => dispatch({ type: FETCH_REQUEST, status: "some", payload: res.data }))
+  //     .catch(err => console.log('ERROR in axios.get courses:', err));
+  // };
+  return {
+    type: FETCH_REQUEST,
+    state: 'some',
+    payload: user
   };
 };
 
@@ -71510,22 +71522,26 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.FetchAllCourses = undefined;
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //define action within an action creator
-var FetchAllCourses = exports.FetchAllCourses = function FetchAllCourses() {
+var FetchAllCourses = exports.FetchAllCourses = function FetchAllCourses(courses) {
   var FETCH_ALL_COURSES = 'FETCH_ALL_COURSES';
   // console.log('in COURSE_FETCH_ALL_COURSES');
-  return function (dispatch) {
-    _axios2.default.get('/api/coursesAll').then(function (res) {
-      return dispatch({ type: FETCH_ALL_COURSES, status: "all", payload: res.data });
-    }).catch(function (err) {
-      return console.log('ERROR in axios.get courses:', err);
-    });
+  // return (dispatch) => {
+  //   axios
+  //     .get('/api/coursesAll')
+  //     .then(res => dispatch({ type: FETCH_ALL_COURSES, status: "all", payload: res.data }))
+  //     .catch(err => console.log('ERROR in axios.get courses:', err));
+  // };
+  return {
+    type: FETCH_ALL_COURSES,
+    status: 'all',
+    payload: courses
   };
 };
 

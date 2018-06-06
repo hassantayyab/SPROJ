@@ -53,8 +53,8 @@ router.get('/coursesAll', (req, res, next) => {
 
 // get some assignments list
 router.get('/assignments/:n/:imp', (req, res, next) => {
-  console.log('In router.get assignments:', req.params.n);
-  AssignmentsDB.find({ id: 1 }, { data: { '$elemMatch': { num: req.params.n, imp: req.params.imp } } })
+  console.log('In router.get assignments:', req.params);
+  AssignmentsDB.find({ id: 1 }, { data: { '$elemMatch': { num: req.params.n, imp: Number(req.params.imp) } } })
     .then((data) => {
       // console.log('ASSIGNMENTS:', data);
       data = data[data.length - 1].data[0];
@@ -67,12 +67,12 @@ router.get('/assignments/:n/:imp', (req, res, next) => {
 });
 
 // get all assignments list
-router.get('/assignmentsAll', (req, res, next) => {
+router.get('/assignmentsAll/:imp', (req, res, next) => {
   // console.log('In router.get assignments:', req.params.n);
-  AssignmentsDB.find({ id: 1 })
+  AssignmentsDB.find({ id: 1 }, { data: { '$elemMatch': { imp: req.params.imp } } })
     .then((data) => {
       // console.log('ASSIGNMENTS:', data);
-      data = data[data.length - 1].data;
+      data = data[data.length - 1].data[0];
       // console.log('ASSIGNMENTS:', data);
       res.send(data);
     })
@@ -80,7 +80,6 @@ router.get('/assignmentsAll', (req, res, next) => {
       console.log('ERROR IN API ASSIGNMENTS:', err);
     });
 });
-
 
 // add new course
 router.post('/courses', (req, res, next) => {
@@ -167,9 +166,11 @@ router.post('/assignments', (req, res, next) => {
 
   if (req.body.c > 1) {
     console.log('In assignment update');
-    AssignmentsDB.update(
-      { 'data.num': item.num, 'data.imp': item.imp },
-      { '$set': { 'data.$.assignments': item.assignments, 'data.$.num': item.num } }
+    AssignmentsDB.updateMany(
+      { data: { $elemMatch: { imp: Number(item.imp), num: item.num} }},
+      // { 'data.imp': Number(item.imp), 'data.num': item.num },
+      { '$set': { 'data.$.assignments': item.assignments } },
+      { safe: true, upsert: true }
     )
       .then((assignment) => {
         res.send(assignment);
@@ -268,13 +269,6 @@ router.post('/answer', (req, res, next) => {
         console.log('ERROR in api POST:', err);
       });
   }
-});
-
-// delete comment
-router.delete('/ninjas/:id', (req, res, next) => {
-  CommentsDB.findByIdAndRemove({ _id: req.params.id }).then((comment) => {
-    res.send(comment);
-  });
 });
 
 module.exports = router;
