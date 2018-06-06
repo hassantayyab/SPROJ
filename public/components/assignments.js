@@ -14,7 +14,6 @@ class Assignments extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			// impValue: null,
 			isPopupOpen: false,
 			assignments: [],
 			user: null
@@ -34,7 +33,6 @@ class Assignments extends Component {
 				if (this.state.user.userType == 1) {
 					this.fetchAssignments();
 				} else {
-					console.log('in else')
 					this.fetchAllAssignments();
 				}
 			})
@@ -44,16 +42,12 @@ class Assignments extends Component {
 	fetchAllAssignments() {
 		axios.get('/api/assignmentsAll' + '/' + this.props.imp)
 			.then(res => {
-				console.log('all fetched Assignments =>', res.data);
 				if (res.data) {
 					this.props.AssignmentFetchRequest(res.data);
 					this.setState({
 						assignments: res.data.assignments
 					})
 				}
-				// else {
-				// 	this.props.AssignmentFetchFailed([], this.state.user.googleId, this.props.imp)
-				// }
 			})
 			.catch(err => console.log('ERROR in axios.get assignments:', err));
 	}
@@ -61,7 +55,6 @@ class Assignments extends Component {
 	fetchAssignments() {
 		axios.get('/api/assignments' + '/' + this.state.user.googleId + '/' + this.props.imp)
 			.then(res => {
-				console.log('fetched Assignments =>', res.data);
 				if (res.data) {
 					this.props.AssignmentFetchRequest(res.data);					
 					this.setState({
@@ -76,18 +69,10 @@ class Assignments extends Component {
 	}
 
 	renderContent() {
-		// const user = this.props.auth;
 		if (this.state.user) {
-			// id = this.state.user.googleId;
 			switch (this.state.user.userType) {
 				// ***STUDENT PAGE***
 				case 0:
-					// if (m2 == 0) {
-					// 	this.fetchAllAssignments();
-					// 	console.log('fetchAssignments called!');
-					// 	m2++;
-					// }
-					// this.props.AssignmentFetchRequest(this.props.auth, this.props.imp);
 					if (this.props.imp == this.props.rImp) {
 						var list = this.state.assignments.map((assignment, index) => {
 							return (
@@ -109,7 +94,6 @@ class Assignments extends Component {
 				// ***INSTRUCTOR PAGE***
 				case 1:
 					// Display Assignments List
-					// console.log('imp and rImp=', this.props.imp, this.props.rImp);
 					if (this.props.fetchId && this.props.imp == this.props.rImp) {
 						// console.log('in case 1:',this.props.assignments)
 						var list = this.state.assignments.map((assignment, index) => {
@@ -179,7 +163,6 @@ class Assignments extends Component {
 };
 
 function mapStateToProps(state, ownProps) {
-	console.log('state.assignments in mapStateToProps =>', state.assignments)
 	return {
 		auth: state.auth.payload,
 		imp: ownProps.match.params.filter,	// course number

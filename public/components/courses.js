@@ -58,12 +58,8 @@ class Courses extends Component {
 	}
 
 	renderContent() {
-		// console.log('in courses this.props.auth:', user);	
-		// const user = this.props.auth;
 		if (this.state.user) {
 			id =  this.state.user.googleId;
-		// console.log('in courses this.state.auth:', this.props.auth)
-			// id = this.props.auth.googleId;
 			switch (this.state.user.userType) {
 				// ***STUDENT PAGE***
 				case 0:
@@ -90,12 +86,10 @@ class Courses extends Component {
 				case 1:
 					if (m==0) {
 						this.fetchCourses(this.state.user);
-						// console.log('fetchCourses called!');
 						m++;
 					}
 					// Display Courses List
 					if (id === fetchId) {
-						// console.log('in case 1', this.props.courses);
 						var list = this.props.courses.map((course, index) => {
 							return (
 								<li key={index}>
@@ -163,7 +157,6 @@ class Courses extends Component {
 };
 
 function mapStateToProps(state) {
-	// console.log('state in courses:', state)
 	if (state.courses) {
 		fetchId = state.courses.num;
 	}

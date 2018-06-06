@@ -27,14 +27,14 @@ class Header extends Component {
       case null:
         return;
       case false:
-        const signIn = <li><Link to="/login" className="card-panel hoverable amber darken-4 btn" id='signIn'>Sign in</Link></li>
+        const signIn = <li key={1}><Link to="/login" className="card-panel hoverable amber darken-4 btn" id='signIn'>Sign in</Link></li>
         return signIn;
       default:
         // <li>{this.props.auth}</li>
         const loggedIn = [
-          <li><img id='thumbnail' className="circle responsive-img" src={user.thumbnail} /></li>,
-          <li id="username" className="blue-grey-text text-lighten-4">{user.username}</li>,
-          <li><a href="/auth/logout" className="card-panel hoverable amber darken-4 btn" id='signIn'>Log out</a></li>
+          <li key={1}><img id='thumbnail' className="circle responsive-img" src={user.thumbnail} /></li>,
+          <li key={2} id="username" className="blue-grey-text text-lighten-4">{user.username}</li>,
+          <li key={3}><a href="/auth/logout" className="card-panel hoverable amber darken-4 btn" id='signIn'>Log out</a></li>
         ];
         return loggedIn;
     }

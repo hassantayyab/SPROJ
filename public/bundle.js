@@ -41589,7 +41589,7 @@ exports.default = function () {
 
   switch (action.type) {
     case 'ASSIGNMENT_FETCH_REQUEST':
-      console.log('in ASSIGNMENT_FETCH_REQUEST =>', action.payload);
+      // console.log('in ASSIGNMENT_FETCH_REQUEST =>', action.payload);
       return Object.assign({}, state, {
         status: action.status,
         num: action.payload.num,
@@ -41598,7 +41598,7 @@ exports.default = function () {
       });
 
     case 'ASSIGNMENT_FETCH_FAILED':
-      console.log('in ASSIGNMENT_FETCH_FAILED =>', action.payload);
+      // console.log('in ASSIGNMENT_FETCH_FAILED =>', action.payload);
       return Object.assign({}, state, {
         status: action.status,
         num: action.id,
@@ -41607,10 +41607,7 @@ exports.default = function () {
       });
 
     case 'CREATE_ASSIGNMENT':
-      console.log('in CREATE_ASSIGNMENT:', action);
-      // var a = action.assignments;
-      // a.push(action.payload);
-      // console.log('a=',a);
+      // console.log('in CREATE_ASSIGNMENT:', action);
       _axios2.default.post('api/assignments', { c: action.assignments.length, assignment: action.assignments, id: action.id, imp: action.imp }).catch(function (err) {
         return console.log('in axios could not POST ASSIGNMENTS:', err);
       });
@@ -41688,9 +41685,8 @@ exports.default = function () {
       } else return state;
 
     case 'CREATE_COURSE':
-      console.log('in CREATE_COURSE:', action.payload);
+      // console.log('in CREATE_COURSE:', action.payload);
       x.push(action.payload);
-      console.log('x =', x);
       _axios2.default.post('api/courses', { c: x.length, course: x, id: action.id }).catch(function (err) {
         return console.log('in axios could not POST COURSES:', err);
       });
@@ -48497,7 +48493,7 @@ var Header = function (_Component) {
         case false:
           var signIn = _react2.default.createElement(
             'li',
-            null,
+            { key: 1 },
             _react2.default.createElement(
               _reactRouterDom.Link,
               { to: '/login', className: 'card-panel hoverable amber darken-4 btn', id: 'signIn' },
@@ -48509,15 +48505,15 @@ var Header = function (_Component) {
           // <li>{this.props.auth}</li>
           var loggedIn = [_react2.default.createElement(
             'li',
-            null,
+            { key: 1 },
             _react2.default.createElement('img', { id: 'thumbnail', className: 'circle responsive-img', src: user.thumbnail })
           ), _react2.default.createElement(
             'li',
-            { id: 'username', className: 'blue-grey-text text-lighten-4' },
+            { key: 2, id: 'username', className: 'blue-grey-text text-lighten-4' },
             user.username
           ), _react2.default.createElement(
             'li',
-            null,
+            { key: 3 },
             _react2.default.createElement(
               'a',
               { href: '/auth/logout', className: 'card-panel hoverable amber darken-4 btn', id: 'signIn' },
@@ -70667,7 +70663,6 @@ var Assignments = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (Assignments.__proto__ || Object.getPrototypeOf(Assignments)).call(this, props));
 
 		_this.state = {
-			// impValue: null,
 			isPopupOpen: false,
 			assignments: [],
 			user: null
@@ -70692,7 +70687,6 @@ var Assignments = function (_Component) {
 				if (_this2.state.user.userType == 1) {
 					_this2.fetchAssignments();
 				} else {
-					console.log('in else');
 					_this2.fetchAllAssignments();
 				}
 			}).catch(function (err) {
@@ -70705,16 +70699,12 @@ var Assignments = function (_Component) {
 			var _this3 = this;
 
 			_axios2.default.get('/api/assignmentsAll' + '/' + this.props.imp).then(function (res) {
-				console.log('all fetched Assignments =>', res.data);
 				if (res.data) {
 					_this3.props.AssignmentFetchRequest(res.data);
 					_this3.setState({
 						assignments: res.data.assignments
 					});
 				}
-				// else {
-				// 	this.props.AssignmentFetchFailed([], this.state.user.googleId, this.props.imp)
-				// }
 			}).catch(function (err) {
 				return console.log('ERROR in axios.get assignments:', err);
 			});
@@ -70725,7 +70715,6 @@ var Assignments = function (_Component) {
 			var _this4 = this;
 
 			_axios2.default.get('/api/assignments' + '/' + this.state.user.googleId + '/' + this.props.imp).then(function (res) {
-				console.log('fetched Assignments =>', res.data);
 				if (res.data) {
 					_this4.props.AssignmentFetchRequest(res.data);
 					_this4.setState({
@@ -70743,18 +70732,10 @@ var Assignments = function (_Component) {
 		value: function renderContent() {
 			var _this5 = this;
 
-			// const user = this.props.auth;
 			if (this.state.user) {
-				// id = this.state.user.googleId;
 				switch (this.state.user.userType) {
 					// ***STUDENT PAGE***
 					case 0:
-						// if (m2 == 0) {
-						// 	this.fetchAllAssignments();
-						// 	console.log('fetchAssignments called!');
-						// 	m2++;
-						// }
-						// this.props.AssignmentFetchRequest(this.props.auth, this.props.imp);
 						if (this.props.imp == this.props.rImp) {
 							var list = this.state.assignments.map(function (assignment, index) {
 								return _react2.default.createElement(
@@ -70778,7 +70759,6 @@ var Assignments = function (_Component) {
 					// ***INSTRUCTOR PAGE***
 					case 1:
 						// Display Assignments List
-						// console.log('imp and rImp=', this.props.imp, this.props.rImp);
 						if (this.props.fetchId && this.props.imp == this.props.rImp) {
 							// console.log('in case 1:',this.props.assignments)
 							var list = this.state.assignments.map(function (assignment, index) {
@@ -70898,7 +70878,6 @@ var Assignments = function (_Component) {
 ;
 
 function mapStateToProps(state, ownProps) {
-	console.log('state.assignments in mapStateToProps =>', state.assignments);
 	return {
 		auth: state.auth.payload,
 		imp: ownProps.match.params.filter, // course number
@@ -70934,7 +70913,6 @@ Object.defineProperty(exports, "__esModule", {
 var CreateAssignment = exports.CreateAssignment = function CreateAssignment(assignments, assignment, id, imp) {
   var CREATE_ASSIGNMENT = 'CREATE_ASSIGNMENT';
   assignments.push(assignment);
-  // console.log('in action:', assignments);  
   return {
     type: CREATE_ASSIGNMENT,
     status: 'created',
@@ -71119,12 +71097,8 @@ var Courses = function (_Component) {
 		value: function renderContent() {
 			var _this5 = this;
 
-			// console.log('in courses this.props.auth:', user);	
-			// const user = this.props.auth;
 			if (this.state.user) {
 				id = this.state.user.googleId;
-				// console.log('in courses this.state.auth:', this.props.auth)
-				// id = this.props.auth.googleId;
 				switch (this.state.user.userType) {
 					// ***STUDENT PAGE***
 					case 0:
@@ -71153,12 +71127,10 @@ var Courses = function (_Component) {
 					case 1:
 						if (m == 0) {
 							this.fetchCourses(this.state.user);
-							// console.log('fetchCourses called!');
 							m++;
 						}
 						// Display Courses List
 						if (id === fetchId) {
-							// console.log('in case 1', this.props.courses);
 							var list = this.props.courses.map(function (course, index) {
 								return _react2.default.createElement(
 									'li',
@@ -71276,7 +71248,6 @@ var Courses = function (_Component) {
 ;
 
 function mapStateToProps(state) {
-	// console.log('state in courses:', state)
 	if (state.courses) {
 		fetchId = state.courses.num;
 	}

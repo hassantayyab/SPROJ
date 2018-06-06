@@ -46,9 +46,8 @@ export default (state = initialState, action) => {
         return state;
 
     case 'CREATE_COURSE':
-      console.log('in CREATE_COURSE:', action.payload);
+      // console.log('in CREATE_COURSE:', action.payload);
       x.push(action.payload);
-      console.log('x =', x);      
       axios.post('api/courses', { c: x.length, course: x, id: action.id })
         .catch(err => console.log('in axios could not POST COURSES:', err));
         
